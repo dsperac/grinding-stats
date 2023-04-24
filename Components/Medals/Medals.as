@@ -20,7 +20,8 @@ class Medals : Component {
     }
 
     void handler() override {
-        while(running){ 
+#if TMNEXT
+        while(running) { 
             auto app = GetApp();
             auto playground = app.CurrentPlayground;
             auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
@@ -28,7 +29,6 @@ class Medals : Component {
 
             if (playground !is null && playgroundScript !is null && playground.GameTerminals.Length > 0) {
                 auto terminal = playground.GameTerminals[0];
-#if TMNEXT
                 auto gui_player = cast<CSmPlayer>(terminal.GUIPlayer);
                 auto ui_sequence = terminal.UISequence_Current;
 
@@ -62,9 +62,9 @@ class Medals : Component {
                     if (handled && ui_sequence != CGamePlaygroundUIConfig::EUISequence::Finish)
                         handled = false;
                 }
-#endif
             }
             yield();
         }
+#endif
     };
 }
