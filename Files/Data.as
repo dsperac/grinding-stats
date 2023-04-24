@@ -7,6 +7,7 @@ class Data {
     Resets@ resets = Resets(0);
     Respawns@ respawns = Respawns(0);
     Timer@ timer = Timer(0);
+    Medals@ medals = Medals(0, 0, 0, 0);
     Files files;
 
     private bool cloud_save_failed = false;
@@ -57,6 +58,7 @@ class Data {
         finishes.start();
         resets.start();
         respawns.start();
+        medals.start();
     }
 
 
@@ -70,6 +72,12 @@ class Data {
             resets = Resets(files.resets);
             timer = Timer(files.time);
             respawns = Respawns(files.respawns);
+            medals = Medals(
+                files.bronze_time,
+                files.silver_time,
+                files.gold_time,
+                files.author_time
+            );
             
             start();
         }
@@ -84,6 +92,10 @@ class Data {
               files.finishes = finishes.total;
               files.resets = resets.total;
               files.respawns = respawns.total;
+              files.bronze_time = medals.bronze.time;
+              files.silver_time = medals.silver.time;
+              files.gold_time = medals.gold.time;
+              files.author_time = medals.author.time;
               files.write_file();
         }
     }

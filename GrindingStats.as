@@ -44,17 +44,28 @@ bool setting_show_resets_session = true;
 [Setting name="Show Total resets" category="Stats"]
 bool setting_show_resets_total = true;
 
-[Setting name="Idle Detection Speed" category="Idle" description="The speed where the car will be considered idle after a set time. (this is not the speed that the car is going but the internal value of the speed)"]
-uint setting_idle_speed = 2;
-[Setting name="Idle Detection Delay" category="Idle" description="The amount of time before Idling will begin."]
-uint setting_idle_time = 5;
-
 [Setting name="Show Current Run's respawns" category="Stats"]
 bool setting_show_respawns_current = false;
 [Setting name="Show Session respawns" category="Stats"]
 bool setting_show_respawns_session = false;
 [Setting name="Show Total respawns" category="Stats"]
 bool setting_show_respawns_total = false;
+
+#if TMNEXT
+[Setting name="Show Time To Achieve Bronze Medal" category="Medals"]
+bool setting_show_time_to_bronze = false;
+[Setting name="Show Time To Achieve Silver Medal" category="Medals"]
+bool setting_show_time_to_silver = false;
+[Setting name="Show Time To Achieve Gold Medal" category="Medals"]
+bool setting_show_time_to_gold = false;
+[Setting name="Show Time To Achieve Author Medal" category="Medals"]
+bool setting_show_time_to_author = false;
+#endif
+
+[Setting name="Idle Detection Speed" category="Idle" description="The speed where the car will be considered idle after a set time. (this is not the speed that the car is going but the internal value of the speed)"]
+uint setting_idle_speed = 2;
+[Setting name="Idle Detection Delay" category="Idle" description="The amount of time before Idling will begin."]
+uint setting_idle_time = 5;
 
 [Setting name="Show debug information" category="Debug"]
 bool setting_show_debug = false;
@@ -67,7 +78,7 @@ bool recap_enabled = false;
 
 
 void Main()
-{    
+{
 #if DEPENDENCY_NADEOSERVICES
     NadeoServices::AddAudience("NadeoLiveServices");
 #endif

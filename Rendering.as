@@ -59,6 +59,34 @@ void render_stats() {
                 UI::TableNextColumn();
                 UI::Text(data.respawns.toString());
             }
+            if (setting_show_time_to_bronze) {
+                UI::TableNextRow();
+                UI::TableNextColumn();
+                UI::Text("\\$ddd" + Icons::Kenney::StarO + " Bronze");
+                UI::TableNextColumn();
+                UI::Text(data.medals.bronze.toString());
+            }
+            if (setting_show_time_to_silver) {
+                UI::TableNextRow();
+                UI::TableNextColumn();
+                UI::Text("\\$ddd" + Icons::Kenney::StarHalfO + " Silver");
+                UI::TableNextColumn();
+                UI::Text(data.medals.silver.toString());
+            }
+            if (setting_show_time_to_gold) {
+                UI::TableNextRow();
+                UI::TableNextColumn();
+                UI::Text("\\$ddd" + Icons::Kenney::Star + " Gold");
+                UI::TableNextColumn();
+                UI::Text(data.medals.gold.toString());
+            }
+            if (setting_show_time_to_author) {
+                UI::TableNextRow();
+                UI::TableNextColumn();
+                UI::Text("\\$ddd" + Icons::Kenney::BadgeAlt + " Author");
+                UI::TableNextColumn();
+                UI::Text(data.medals.author.toString());
+            }
 #endif
             UI::EndTable();
         UI::EndGroup();
