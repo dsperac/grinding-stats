@@ -20,7 +20,7 @@ bool setting_show_map_name_color = true;
 [Setting name="Show fractions of second" category="UI"]
 bool setting_show_fractions_of_second = true;
 
-[Setting name="Show thousands" category="UI" description="If show fractions of second is enabled, toggles showing of the thousanth digit"]
+[Setting name="Show thousands" category="UI" description="If show fractions of second is enabled, toggles showing of the thousandth digit"]
 bool setting_show_thousands = false;
 
 [Setting name="Show Hour if 0" category="UI"]
@@ -42,6 +42,7 @@ bool setting_show_resets_session = true;
 [Setting name="Show Total resets" category="Stats"]
 bool setting_show_resets_total = true;
 
+#if TMNEXT
 [Setting name="Show Current Run's respawns" category="Stats"]
 bool setting_show_respawns_current = false;
 [Setting name="Show Session respawns" category="Stats"]
@@ -49,7 +50,6 @@ bool setting_show_respawns_session = false;
 [Setting name="Show Total respawns" category="Stats"]
 bool setting_show_respawns_total = false;
 
-#if TMNEXT
 [Setting name="Show Time To Achieve Bronze Medal" category="Medals"]
 bool setting_show_time_to_bronze = false;
 [Setting name="Show Time To Achieve Silver Medal" category="Medals"]
@@ -57,6 +57,16 @@ bool setting_show_time_to_silver = false;
 [Setting name="Show Time To Achieve Gold Medal" category="Medals"]
 bool setting_show_time_to_gold = false;
 [Setting name="Show Time To Achieve Author Medal" category="Medals"]
+bool setting_show_time_to_author = false;
+
+#else
+// if not TMNEXT set variables to false, don't read as settings
+bool setting_show_respawns_current = false;
+bool setting_show_respawns_session = false;
+bool setting_show_respawns_total = false;
+bool setting_show_time_to_bronze = false;
+bool setting_show_time_to_silver = false;
+bool setting_show_time_to_gold = false;
 bool setting_show_time_to_author = false;
 #endif
 
