@@ -13,13 +13,11 @@ bool setting_show_duplicates = false;
 
 [Setting name="Show map name/author" category="UI"]
 bool setting_show_map_name = true;
-
 [Setting name="Show map name/author with color codes" category="UI"]
 bool setting_show_map_name_color = true;
 
 [Setting name="Show fractions of second" category="UI"]
 bool setting_show_fractions_of_second = true;
-
 [Setting name="Show thousands" category="UI" description="If show fractions of second is enabled, toggles showing of the thousandth digit"]
 bool setting_show_thousands = false;
 
@@ -28,7 +26,6 @@ bool setting_show_hour_if_0 = false;
 
 [Setting name="Show Total time" category="Stats"]
 bool setting_show_total_time = true;
-
 [Setting name="Show Session time" category="Stats"]
 bool setting_show_session_time = true;
 

@@ -61,12 +61,12 @@ class Files {
     uint64 time = 0;
     bool loaded = false;
     uint respawns = 0;
-    uint64 bronze_time = 0;
-    uint64 silver_time = 0;
-    uint64 gold_time = 0;
-    uint64 author_time = 0;
+    uint64 time_to_bronze = 0;
+    uint64 time_to_silver = 0;
+    uint64 time_to_gold = 0;
+    uint64 time_to_author = 0;
     Json::Value json_obj = Json::Parse(
-        '{"finishes": 0,"resets": 0,"time": 0,"respawns":0,"bronzeTime":0,"silverTime":0,"goldTime":0,"authorTime":0}'
+        '{"finishes": 0,"resets": 0,"time": 0,"respawns":0,"timeToBronze":0,"timeToSilver":0,"timeToGold":0,"timeToAuthor":0}'
     );
     Files() {}
     Files(const string &in id) {
@@ -119,19 +119,19 @@ class Files {
         respawns = Text::ParseUInt64(content.Get('respawns'));
         debug_print("Read finishes " + finishes + " resets " + resets + " time " + time + " respawns " + respawns + " from " + json_file);
 
-        bronze_time = content.HasKey('bronzeTime')
-            ? Text::ParseUInt64(content.Get('bronzeTime'))
+        time_to_bronze = content.HasKey('timeToBronze')
+            ? Text::ParseUInt64(content.Get('timeToBronze'))
             : 0;
-        silver_time = content.HasKey('silverTime')
-            ? Text::ParseUInt64(content.Get('silverTime'))
+        time_to_silver = content.HasKey('timeToSilver')
+            ? Text::ParseUInt64(content.Get('timeToSilver'))
             : 0;
-        gold_time = content.HasKey('goldTime')
-            ? Text::ParseUInt64(content.Get('goldTime'))
+        time_to_gold = content.HasKey('timeToGold')
+            ? Text::ParseUInt64(content.Get('timeToGold'))
             : 0;
-        author_time = content.HasKey('authorTime')
-            ? Text::ParseUInt64(content.Get('authorTime'))
+        time_to_author = content.HasKey('timeToAuthor')
+            ? Text::ParseUInt64(content.Get('timeToAuthor'))
             : 0;
-        debug_print("Read bronze " + bronze_time + " silver " + silver_time + " gold " + gold_time + " author " + author_time + " from " + json_file);
+        debug_print("Read bronze " + time_to_bronze + " silver " + time_to_silver + " gold " + time_to_gold + " author " + time_to_author);
     }
 
     void read_file_legacy(const Json::Value &in content, bool is_old_dev = false) {
@@ -141,19 +141,19 @@ class Files {
         respawns = is_old_dev ? 0 : content.Get('respawns');
         debug_print("Read (legacy) finishes " + finishes + " resets " + resets + " time " + time + " respawns " + respawns + " from " + json_file);
 
-        bronze_time = !is_old_dev && content.HasKey('bronzeTime')
-            ? Text::ParseUInt64(content.Get('bronzeTime'))
+        time_to_bronze = !is_old_dev && content.HasKey('timeToBronze')
+            ? Text::ParseUInt64(content.Get('timeToBronze'))
             : 0;
-        silver_time = !is_old_dev && content.HasKey('silverTime')
-            ? Text::ParseUInt64(content.Get('silverTime'))
+        time_to_silver = !is_old_dev && content.HasKey('timeToSilver')
+            ? Text::ParseUInt64(content.Get('timeToSilver'))
             : 0;
-        gold_time = !is_old_dev && content.HasKey('goldTime')
-            ? Text::ParseUInt64(content.Get('goldTime'))
+        time_to_gold = !is_old_dev && content.HasKey('timeToGold')
+            ? Text::ParseUInt64(content.Get('timeToGold'))
             : 0;
-        author_time = !is_old_dev && content.HasKey('authorTime')
-            ? Text::ParseUInt64(content.Get('authorTime'))
+        time_to_author = !is_old_dev && content.HasKey('timeToAuthor')
+            ? Text::ParseUInt64(content.Get('timeToAuthor'))
             : 0;
-        debug_print("Read (legacy) bronze " + bronze_time + " silver " + silver_time + " gold " + gold_time + " author " + author_time + " from " + json_file);
+        debug_print("Read (legacy) bronze " + time_to_bronze + " silver " + time_to_silver + " gold " + time_to_gold + " author " + time_to_author);
     }
 
 
@@ -175,14 +175,14 @@ class Files {
         content["resets"]   = Text::Format("%6d", resets);
         content["time"]     = Text::Format("%11d", time);
         content["respawns"] = Text::Format("%6d", respawns);
-        content["bronzeTime"] = Text::Format("%11d", bronze_time);
-        content["silverTime"] = Text::Format("%11d", silver_time);
-        content["goldTime"] = Text::Format("%11d", gold_time);
-        content["authorTime"] = Text::Format("%11d", author_time);
+        content["timeToBronze"] = Text::Format("%11d", time_to_bronze);
+        content["timeToSilver"] = Text::Format("%11d", time_to_silver);
+        content["timeToGold"] = Text::Format("%11d", time_to_gold);
+        content["timeToAuthor"] = Text::Format("%11d", time_to_author);
         Json::ToFile(json_file,content);
         
         debug_print("Wrote finishes " + finishes + " resets " + resets + " time " + time + " respawns " + respawns + " to " + json_file);
-        debug_print("Wrote bronze " + bronze_time + " silver " + silver_time + " gold " + gold_time + " author " + author_time + " to " + json_file);
+        debug_print("Wrote bronze " + time_to_bronze + " silver " + time_to_silver + " gold " + time_to_gold + " author " + time_to_author);
     }
 
     string get_map_id() {
@@ -221,29 +221,29 @@ class Files {
     void set_respawns(uint r) {
         respawns = r;
     }
-    void set_bronze_time(uint64 t) {
-        bronze_time = t;
+    void set_time_to_bronze(uint64 t) {
+        time_to_bronze = t;
     }
-    uint64 get_bronze_time() {
-        return bronze_time;
+    uint64 get_time_to_bronze() {
+        return time_to_bronze;
     }
-    void set_silver_time(uint64 t) {
-        silver_time = t;
+    void set_time_to_silver(uint64 t) {
+        time_to_silver = t;
     }
-    uint64 get_silver_time() {
-        return silver_time;
+    uint64 get_time_to_silver() {
+        return time_to_silver;
     }
-    void set_gold_time(uint64 t) {
-        gold_time = t;
+    void set_time_to_gold(uint64 t) {
+        time_to_gold = t;
     }
-    uint64 get_gold_time() {
-        return gold_time;
+    uint64 get_time_to_gold() {
+        return time_to_gold;
     }
-    void set_author_time(uint64 t) {
-        author_time = t;
+    void set_time_to_author(uint64 t) {
+        time_to_author = t;
     }
-    uint64 get_author_time() {
-        return author_time;
+    uint64 get_time_to_author() {
+        return time_to_author;
     }
     void reset_file() {
         print(json_file);

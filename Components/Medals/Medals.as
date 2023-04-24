@@ -8,15 +8,15 @@ class Medals : Component {
     Medals() {}
 
     Medals(
-        uint64 bronze_time,
-        uint64 silver_time,
-        uint64 gold_time,
-        uint64 author_time
+        uint64 time_to_bronze,
+        uint64 time_to_silver,
+        uint64 time_to_gold,
+        uint64 time_to_author
     ) {
-        bronze = Medal(bronze_time);
-        silver = Medal(silver_time);
-        gold = Medal(gold_time);
-        author = Medal(author_time);
+        bronze = Medal(time_to_bronze);
+        silver = Medal(time_to_silver);
+        gold = Medal(time_to_gold);
+        author = Medal(time_to_author);
     }
 
     void handler() override {
@@ -44,17 +44,17 @@ class Medals : Component {
                         auto curr_total_time = data.timer.total;
                         auto finish_time = ghost.Result.Time;
 
-                        if (bronze.time == 0 && finish_time <= map.TMObjective_BronzeTime) {
-                            bronze.time = curr_total_time;
+                        if (bronze.time_to_acq == 0 && finish_time <= map.TMObjective_BronzeTime) {
+                            bronze.time_to_acq = curr_total_time;
                         }
-                        if (silver.time == 0 && finish_time <= map.TMObjective_SilverTime) {
-                            silver.time = curr_total_time;
+                        if (silver.time_to_acq == 0 && finish_time <= map.TMObjective_SilverTime) {
+                            silver.time_to_acq = curr_total_time;
                         }
-                        if (gold.time == 0 && finish_time <= map.TMObjective_GoldTime) {
-                            gold.time = curr_total_time;
+                        if (gold.time_to_acq == 0 && finish_time <= map.TMObjective_GoldTime) {
+                            gold.time_to_acq = curr_total_time;
                         }
-                        if (author.time == 0 && finish_time <= map.TMObjective_AuthorTime) {
-                            author.time = curr_total_time;
+                        if (author.time_to_acq == 0 && finish_time <= map.TMObjective_AuthorTime) {
+                            author.time_to_acq = curr_total_time;
                         }
                         
                         playgroundScript.DataFileMgr.Ghost_Release(ghost.Id);

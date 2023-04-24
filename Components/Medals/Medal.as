@@ -1,15 +1,15 @@
 // Medal.as
 class Medal {
-    uint64 time;
+    uint64 time_to_acq;
 
     Medal() {}
 
-    Medal(uint64 _time) {
-        time = _time;
+    Medal(uint64 _time_to_acq) {
+        time_to_acq = _time_to_acq;
     }
 
     string toString() {
-        return '\\$bbb' + Medal::to_string(time);
+        return '\\$bbb' + Medal::to_string(time_to_acq);
     }
 }
 
