@@ -175,14 +175,18 @@ class Files {
         content["resets"]   = Text::Format("%6d", resets);
         content["time"]     = Text::Format("%11d", time);
         content["respawns"] = Text::Format("%6d", respawns);
+#if TMNEXT
         content["timeToBronze"] = Text::Format("%11d", time_to_bronze);
         content["timeToSilver"] = Text::Format("%11d", time_to_silver);
         content["timeToGold"] = Text::Format("%11d", time_to_gold);
         content["timeToAuthor"] = Text::Format("%11d", time_to_author);
+#endif
         Json::ToFile(json_file,content);
         
         debug_print("Wrote finishes " + finishes + " resets " + resets + " time " + time + " respawns " + respawns + " to " + json_file);
+#if TMNEXT
         debug_print("Wrote bronze " + time_to_bronze + " silver " + time_to_silver + " gold " + time_to_gold + " author " + time_to_author);
+#endif
     }
 
     string get_map_id() {
