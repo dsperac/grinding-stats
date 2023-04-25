@@ -17,34 +17,32 @@ class Medals : Component {
         silver = Medal(time_to_silver);
         gold = Medal(time_to_gold);
         author = Medal(time_to_author);
-#if TMNEXT
-        startnew(CoroutineFunc(lock_earlier_medals));
-#endif
     }
 
     void lock_earlier_medals() {
-        if (data.map_data.pb > 0) {
+        auto map_times = data.map_data.medal_times;
+        if (map_times.personal_best > 0) {
             if (
                 bronze.time_to_acq == 0
-                && data.map_data.pb < data.map_data.bronze
+                && map_times.personal_best < map_times.bronze
             ) {
                 bronze.Lock();
             }
             if (
                 silver.time_to_acq == 0
-                && data.map_data.pb < data.map_data.silver
+                && map_times.personal_best < map_times.silver
             ) {
                 silver.Lock();
             }
             if (
                 gold.time_to_acq == 0
-                && data.map_data.pb < data.map_data.gold
+                && map_times.personal_best < map_times.gold
             ) {
                 gold.Lock();
             }
             if (
                 author.time_to_acq == 0
-                && data.map_data.pb < data.map_data.author
+                && map_times.personal_best < map_times.author
             ) {
                 author.Lock();
             }
@@ -74,17 +72,18 @@ class Medals : Component {
 
                         auto curr_total_time = data.timer.total;
                         auto finish_time = ghost.Result.Time;
+                        auto map_times = data.map_data.medal_times;
 
-                        if (!bronze.IsLocked() && bronze.time_to_acq == 0 && finish_time <= data.map_data.bronze) {
+                        if (!bronze.IsLocked() && bronze.time_to_acq == 0 && finish_time <= map_times.bronze) {
                             bronze.time_to_acq = curr_total_time;
                         }
-                        if (!silver.IsLocked() && silver.time_to_acq == 0 && finish_time <= data.map_data.silver) {
+                        if (!silver.IsLocked() && silver.time_to_acq == 0 && finish_time <= map_times.silver) {
                             silver.time_to_acq = curr_total_time;
                         }
-                        if (!gold.IsLocked() && gold.time_to_acq == 0 && finish_time <= data.map_data.gold) {
+                        if (!gold.IsLocked() && gold.time_to_acq == 0 && finish_time <= map_times.gold) {
                             gold.time_to_acq = curr_total_time;
                         }
-                        if (!author.IsLocked() && author.time_to_acq == 0 && finish_time <= data.map_data.bronze) {
+                        if (!author.IsLocked() && author.time_to_acq == 0 && finish_time <= map_times.bronze) {
                             author.time_to_acq = curr_total_time;
                         }
                         
