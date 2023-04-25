@@ -11,7 +11,7 @@ class Medal {
 
     string toString() {
         if (is_locked) {
-            return '\\$bbb' + '?';
+            return '\\$bbb' + '+';
         }
         return '\\$bbb' + Medal::to_string(time_to_acq);
     }
