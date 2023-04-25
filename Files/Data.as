@@ -1,6 +1,7 @@
 class Data {
     string mapUid = "";
     string file = "";
+    MapData@ map_data = MapData();
 
     Finishes@ finishes = Finishes(0);
     Resets@ resets = Resets(0);
@@ -10,46 +11,45 @@ class Data {
     Files files;
 
     private bool cloud_save_failed = false;
+
     Data()  {
         startnew(CoroutineFunc(map_handler));
     }
-
-
     
     void map_handler() {
-        string mapId = "";
         auto app = GetApp();
         while (true) {
 #if TMNEXT
-        auto playground = cast<CSmArenaClient>(app.CurrentPlayground);
-        mapId = (playground is null || playground.Map is null) ? "" : playground.Map.IdName;
+            auto playground = cast<CSmArenaClient>(app.CurrentPlayground);
+            auto map = playground !is null ? playground.Map : null;
+            string mapId = (map is null) ? "" : map.IdName;
 #elif MP4
-        auto rootmap = app.RootMap;
-        mapId = (rootmap is null ) ? "" : rootmap.IdName;
+            auto rootmap = app.RootMap;
+            string mapId = (rootmap is null ) ? "" : rootmap.IdName;
 #elif TURBO
-        auto challenge = app.Challenge;
-        mapId = (challenge is null) ? "" : challenge.IdName;
+            auto challenge = app.Challenge;
+            string mapId = (challenge is null) ? "" : challenge.IdName;
 #endif
-        if (mapId != mapUid && app.Editor is null) { 
-            //the map has changed and we are not in the editor.
-            //the map has changed //we should save and then load the new map's data
-            timer.timing = false;
-            auto saving = startnew(CoroutineFunc(save));
-            while (saving.IsRunning()) yield();
-            mapUid = mapId;
-            file = folder_location + "/" + mapUid + '.json';
-            
-            startnew(CoroutineFunc(load));
-            
-        }
-        yield();
+            if (mapId != mapUid && app.Editor is null) { 
+                //the map has changed and we are not in the editor.
+                //the map has changed //we should save and then load the new map's data
+                timer.timing = false;
+                auto saving = startnew(CoroutineFunc(save));
+                while (saving.IsRunning()) yield();
+                mapUid = mapId;
+                map_data = MapData(mapId);
+                file = folder_location + "/" + mapUid + '.json';
+
+                startnew(CoroutineFunc(load));
+
+            }
+            yield();
         }
     }
 
     ~Data() {
         save();
     }
-
 
     void start() {
         timer.start();

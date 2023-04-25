@@ -1,6 +1,7 @@
 // Medal.as
 class Medal {
-    uint64 time_to_acq;
+    private bool is_locked = false;
+    uint64 time_to_acq = 0;
 
     Medal() {}
 
@@ -9,7 +10,18 @@ class Medal {
     }
 
     string toString() {
+        if (is_locked) {
+            return '\\$bbb' + '?';
+        }
         return '\\$bbb' + Medal::to_string(time_to_acq);
+    }
+
+    void Lock() {
+        is_locked = true;
+    }
+
+    bool IsLocked() {
+        return is_locked;
     }
 }
 

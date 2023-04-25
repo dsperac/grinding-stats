@@ -1,9 +1,9 @@
 // Medals.as
 class Medals : Component {
-    Medal bronze;
-    Medal silver;
-    Medal gold;
-    Medal author;
+    Medal@ bronze = Medal(0);
+    Medal@ silver = Medal(0);
+    Medal@ gold = Medal(0);
+    Medal@ author = Medal(0);
     
     Medals() {}
 
@@ -17,6 +17,38 @@ class Medals : Component {
         silver = Medal(time_to_silver);
         gold = Medal(time_to_gold);
         author = Medal(time_to_author);
+#if TMNEXT
+        startnew(CoroutineFunc(lock_earlier_medals));
+#endif
+    }
+
+    void lock_earlier_medals() {
+        if (data.map_data.pb > 0) {
+            if (
+                bronze.time_to_acq == 0
+                && data.map_data.pb < data.map_data.bronze
+            ) {
+                bronze.Lock();
+            }
+            if (
+                silver.time_to_acq == 0
+                && data.map_data.pb < data.map_data.silver
+            ) {
+                silver.Lock();
+            }
+            if (
+                gold.time_to_acq == 0
+                && data.map_data.pb < data.map_data.gold
+            ) {
+                gold.Lock();
+            }
+            if (
+                author.time_to_acq == 0
+                && data.map_data.pb < data.map_data.author
+            ) {
+                author.Lock();
+            }
+        }
     }
 
     void handler() override {
@@ -37,23 +69,22 @@ class Medals : Component {
                     if (!handled && ui_sequence == CGamePlaygroundUIConfig::EUISequence::Finish) {
                         handled = true;
 
-                        auto map = app.RootMap;
                         auto playerScriptAPI = cast<CSmScriptPlayer>(gui_player.ScriptAPI);
                         auto ghost = playgroundScript.Ghost_RetrieveFromPlayer(playerScriptAPI);
 
                         auto curr_total_time = data.timer.total;
                         auto finish_time = ghost.Result.Time;
 
-                        if (bronze.time_to_acq == 0 && finish_time <= map.TMObjective_BronzeTime) {
+                        if (!bronze.IsLocked() && bronze.time_to_acq == 0 && finish_time <= data.map_data.bronze) {
                             bronze.time_to_acq = curr_total_time;
                         }
-                        if (silver.time_to_acq == 0 && finish_time <= map.TMObjective_SilverTime) {
+                        if (!silver.IsLocked() && silver.time_to_acq == 0 && finish_time <= data.map_data.silver) {
                             silver.time_to_acq = curr_total_time;
                         }
-                        if (gold.time_to_acq == 0 && finish_time <= map.TMObjective_GoldTime) {
+                        if (!gold.IsLocked() && gold.time_to_acq == 0 && finish_time <= data.map_data.gold) {
                             gold.time_to_acq = curr_total_time;
                         }
-                        if (author.time_to_acq == 0 && finish_time <= map.TMObjective_AuthorTime) {
+                        if (!author.IsLocked() && author.time_to_acq == 0 && finish_time <= data.map_data.bronze) {
                             author.time_to_acq = curr_total_time;
                         }
                         

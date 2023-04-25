@@ -8,7 +8,7 @@ Data data;
 Recap recap;
 
 bool recap_enabled = false;
-string folder_location = IO::FromDataFolder("") + "Grinding Stats";
+string folder_location = IO::FromDataFolder('') + 'Grinding Stats';
 
 void Main()
 {
