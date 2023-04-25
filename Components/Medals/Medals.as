@@ -86,7 +86,7 @@ class Medals : Component {
                         if (!author.IsLocked() && author.time_to_acq == 0 && finish_time <= map_times.bronze) {
                             author.time_to_acq = curr_total_time;
                         }
-                        
+                      
                         playgroundScript.DataFileMgr.Ghost_Release(ghost.Id);
                     }
                     if (handled && ui_sequence != CGamePlaygroundUIConfig::EUISequence::Finish)

@@ -10,7 +10,7 @@ class MapData {
 #if TMNEXT
         if (_mapUid != '') {
             load_medal_times();
-            load_personal_best();
+            startnew(CoroutineFunc(load_personal_best));
             startnew(CoroutineFunc(load_online_pb));
         }
 #endif
