@@ -1,5 +1,4 @@
 class Data {
-    private string folder_location = IO::FromDataFolder("") + "Grinding Stats";
     string mapUid = "";
     string file = "";
 
@@ -13,7 +12,6 @@ class Data {
     private bool cloud_save_failed = false;
     Data()  {
         startnew(CoroutineFunc(map_handler));
-        if (!IO::FolderExists(folder_location)) IO::CreateFolder(folder_location);
     }
 
 

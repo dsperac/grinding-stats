@@ -53,7 +53,6 @@
 
 class Files {
     bool created = false;
-    string folder_location = "";
     string map_id = "";
     string json_file = "";
     uint finishes = 0;
@@ -71,11 +70,6 @@ class Files {
     Files() {}
     Files(const string &in id) {
         if (id == "" || id == "Unassigned") return;
-        folder_location = IO::FromDataFolder("") + "Grinding Stats";
-        
-
-
-        if (!IO::FolderExists(folder_location)) IO::CreateFolder(folder_location);
 
         map_id = id;
         json_file = folder_location + '/' + map_id + '.json';
@@ -192,12 +186,6 @@ class Files {
     string get_map_id() {
         return map_id;
     }
-    string get_folder_location() {
-        return folder_location;
-    }
-    void set_folder_location(const string &in loc) {
-        folder_location = loc;
-    }
     void set_map_id(const string &in i) {
         map_id = i;
     }
@@ -254,7 +242,7 @@ class Files {
         IO::Delete(json_file);
     }
     void reset_all() {
-        auto files = IO::IndexFolder(folder_location,true);
+        auto files = IO::IndexFolder(folder_location, true);
         for (uint i = 0; i < files.Length; i++) {
             IO::Delete(files[i]);
         }

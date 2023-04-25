@@ -8,7 +8,7 @@ Data data;
 Recap recap;
 
 bool recap_enabled = false;
-
+string folder_location = IO::FromDataFolder("") + "Grinding Stats";
 
 void Main()
 {
@@ -16,4 +16,5 @@ void Main()
     NadeoServices::AddAudience("NadeoLiveServices");
 #endif
     if (setting_recap_show_menu && !recap.started) recap.start(); 
+    if (!IO::FolderExists(folder_location)) IO::CreateFolder(folder_location);
 }
