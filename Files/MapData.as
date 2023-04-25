@@ -67,7 +67,7 @@ class MapData {
             return;
         }
 
-        medal_times.personal_best = Math::Min(medal_times.personal_best, score);
+        medal_times.personal_best = medal_times.personal_best > 0 ? Math::Min(medal_times.personal_best, score) : score;
         startnew(CoroutineFunc(data.medals.lock_earlier_medals));
 #endif
     }
