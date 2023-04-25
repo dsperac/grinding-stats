@@ -52,9 +52,9 @@ bool setting_show_time_to_bronze = false;
 [Setting name="Show Time To Achieve Silver Medal" category="Medals"]
 bool setting_show_time_to_silver = false;
 [Setting name="Show Time To Achieve Gold Medal" category="Medals"]
-bool setting_show_time_to_gold = false;
+bool setting_show_time_to_gold = true;
 [Setting name="Show Time To Achieve Author Medal" category="Medals"]
-bool setting_show_time_to_author = false;
+bool setting_show_time_to_author = true;
 
 #else
 // if not TMNEXT set variables to false, don't read as settings
