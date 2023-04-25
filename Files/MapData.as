@@ -11,9 +11,7 @@ class MapData {
         if (_mapUid != '') {
             load_medal_times();
             load_personal_best();
-#if DEPENDENCY_NADEOSERVICES
             startnew(CoroutineFunc(load_online_pb));
-#endif
         }
 #endif
     }
@@ -48,24 +46,30 @@ class MapData {
     }
 
     void load_online_pb() {
+#if DEPENDENCY_NADEOSERVICES
         auto info = FetchEndpoint(NadeoServices::BaseURL() + "/api/token/leaderboard/group/Personal_Best/map/" + mapUid + "/surround/0/0?onlyWorld=true");
-
-        if(info.GetType() != Json::Type::Null) {
-            auto tops = info["tops"];
-
-            if(tops.GetType() == Json::Type::Array) {
-                auto top = tops[0]["top"];
-
-                if(top.Length > 0) {
-                    uint score = top[0]["score"];
-
-                    if (score > 0) {
-                        medal_times.personal_best = Math::Min(medal_times.personal_best, score);
-                        startnew(CoroutineFunc(data.medals.lock_earlier_medals));
-                    }
-                }
-            }
+        if (info.GetType() == Json::Type::Null) {
+            return;
         }
+
+        auto tops = info["tops"];
+        if (tops.GetType() != Json::Type::Array) {
+            return;
+        }
+
+        auto top = tops[0]["top"];
+        if (top.Length == 0) {
+            return;
+        }
+
+        uint score = top[0]["score"];
+        if (score == 0) {
+            return;
+        }
+
+        medal_times.personal_best = Math::Min(medal_times.personal_best, score);
+        startnew(CoroutineFunc(data.medals.lock_earlier_medals));
+#endif
     }
 }
 
