@@ -92,7 +92,9 @@ void RenderRecap() {
         }
 #if TURBO
 uint columns = 5;
-#elif MP4||TMNEXT
+#elif TMNEXT
+uint columns = 10;
+#elif MP4
 uint columns = 6;
 #endif
         if (UI::BeginTable("Items",columns,UI::TableFlags::Sortable | UI::TableFlags::Resizable | UI::TableFlags::ScrollY)) {
@@ -103,13 +105,16 @@ uint columns = 6;
                                          UI::TableColumnFlags::PreferSortDescending | UI::TableColumnFlags::NoHide,150);
             UI::TableSetupColumn("Finishes",UI::TableColumnFlags::WidthFixed,100);
             UI::TableSetupColumn("Resets",UI::TableColumnFlags::WidthFixed,100);
-            UI::TableSetupColumn("Last Played", UI::TableColumnFlags::WidthFixed,100);
 #if TMNEXT
             UI::TableSetupColumn("Respawns",UI::TableColumnFlags::WidthFixed,100);
+            UI::TableSetupColumn("Time to Bronze", UI::TableColumnFlags::WidthFixed, 100);
+            UI::TableSetupColumn("Time to Silver", UI::TableColumnFlags::WidthFixed, 100);
+            UI::TableSetupColumn("Time to Gold", UI::TableColumnFlags::WidthFixed, 100);
+            UI::TableSetupColumn("Time to Author", UI::TableColumnFlags::WidthFixed, 100);
 #elif MP4
             UI::TableSetupColumn("Title pack",UI::TableColumnFlags::WidthFixed|UI::TableColumnFlags::NoResize,100);
 #endif
-            
+            UI::TableSetupColumn("Last Played", UI::TableColumnFlags::WidthFixed, 100);
             UI::TableHeadersRow();
 
             //sorting
@@ -126,6 +131,10 @@ uint columns = 6;
                         string finishes;
                         string resets;
                         string respawns;
+                        string time_to_bronze;
+                        string time_to_silver;
+                        string time_to_gold;
+                        string time_to_author;
                         string stripped_name;
                         string time_modified;
 #if MP4
@@ -140,6 +149,10 @@ uint columns = 6;
                         finishes = "" + element.finishes;
                         resets = "" + element.resets;
                         respawns = "" + element.respawns;
+                        time_to_bronze = Medal::to_string(element.time_to_bronze);
+                        time_to_silver = Medal::to_string(element.time_to_silver);
+                        time_to_gold = Medal::to_string(element.time_to_gold);
+                        time_to_author = Medal::to_string(element.time_to_author);
                         time_modified = Time::FormatString("%F %r",element.modified_time);
 #if MP4
                         titlepack = element.titlepack;
@@ -152,6 +165,10 @@ uint columns = 6;
                         finishes = "" + recap.total_finishes;
                         resets = "" + recap.total_resets;
                         respawns = "" + recap.total_respawns;
+                        time_to_bronze = Medal::to_string(recap.total_time_to_bronze);
+                        time_to_silver = Medal::to_string(recap.total_time_to_silver);
+                        time_to_gold = Medal::to_string(recap.total_time_to_gold);
+                        time_to_author = Medal::to_string(recap.total_time_to_author);
                         time_modified = "--:--:--";
                     }
                         UI::TableNextRow();
@@ -169,16 +186,28 @@ uint columns = 6;
                         UI::Text(finishes);
                         UI::TableSetColumnIndex(3);
                         UI::Text(resets);
+#if TMNEXT
+                        UI::TableSetColumnIndex(4);
+                        UI::Text(respawns);
+                        UI::TableSetColumnIndex(5);
+                        UI::Text(time_to_bronze);
+                        UI::TableSetColumnIndex(6);
+                        UI::Text(time_to_silver);
+                        UI::TableSetColumnIndex(7);
+                        UI::Text(time_to_gold);
+                        UI::TableSetColumnIndex(8);
+                        UI::Text(time_to_author);
+                        UI::TableSetColumnIndex(9);
+                        UI::Text(time_modified);
+#elif MP4
+                        UI::TableSetColumnIndex(4);
+                        UI::Text(titlepack);
+                        UI::TableSetColumnIndex(5);
+                        UI::Text(time_modified);
+#else
                         UI::TableSetColumnIndex(4);
                         UI::Text(time_modified);
-#if TMNEXT
-                        UI::TableSetColumnIndex(5);
-                        UI::Text(respawns);
-#elif MP4
-                        UI::TableSetColumnIndex(5);
-                        UI::Text(titlepack);
 #endif
-                        
                 }
             }
         UI::EndTable();
