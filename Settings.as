@@ -1,4 +1,3 @@
-// Settings.as
 [Setting name="Enabled" category="UI"]
 bool setting_enabled = true;
 
@@ -57,7 +56,7 @@ bool setting_show_time_to_gold = true;
 bool setting_show_time_to_author = true;
 
 #else
-// if not TMNEXT set variables to false, don't read as settings
+
 bool setting_show_respawns_current = false;
 bool setting_show_respawns_session = false;
 bool setting_show_respawns_total = false;

@@ -71,10 +71,10 @@ class Data {
             timer = Timer(files.time);
             respawns = Respawns(files.respawns);
             medals = Medals(
-                files.time_to_bronze,
-                files.time_to_silver,
-                files.time_to_gold,
-                files.time_to_author
+                files.time_to_bronze.time,
+                files.time_to_silver.time,
+                files.time_to_gold.time,
+                files.time_to_author.time
             );
             
             start();
@@ -90,10 +90,10 @@ class Data {
               files.finishes = finishes.total;
               files.resets = resets.total;
               files.respawns = respawns.total;
-              files.time_to_bronze = medals.bronze.time_to_acq;
-              files.time_to_silver = medals.silver.time_to_acq;
-              files.time_to_gold = medals.gold.time_to_acq;
-              files.time_to_author = medals.author.time_to_acq;
+              files.time_to_bronze.set_time_from_medal(medals.bronze);
+              files.time_to_silver.set_time_from_medal(medals.silver);
+              files.time_to_gold.set_time_from_medal(medals.gold);
+              files.time_to_author.set_time_from_medal(medals.author);
               files.write_file();
         }
     }

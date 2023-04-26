@@ -62,10 +62,10 @@ class Recap {
         total_time_to_gold = 0;
         total_time_to_author = 0;
         for (uint i = 0; i < filtered_elements.Length; i++) {
-            total_time_to_bronze += filtered_elements[i].time_to_bronze;
-            total_time_to_silver += filtered_elements[i].time_to_silver;
-            total_time_to_gold += filtered_elements[i].time_to_gold;
-            total_time_to_author += filtered_elements[i].time_to_author;
+            total_time_to_bronze += filtered_elements[i].time_to_bronze.time;
+            total_time_to_silver += filtered_elements[i].time_to_silver.time;
+            total_time_to_gold += filtered_elements[i].time_to_gold.time;
+            total_time_to_author += filtered_elements[i].time_to_author.time;
         }
     }
 
@@ -105,10 +105,10 @@ class Recap {
                     case 3: filtered_elements.Sort(function(a,b) {return a.resets < b.resets;});break;
 #if TMNEXT
                     case 4: filtered_elements.Sort(function(a,b) {return a.respawns < b.respawns;});break;
-                    case 5: filtered_elements.Sort(function(a,b) {return a.time_to_bronze < b.time_to_bronze;});break;
-                    case 6: filtered_elements.Sort(function(a,b) {return a.time_to_silver < b.time_to_silver;});break;
-                    case 7: filtered_elements.Sort(function(a,b) {return a.time_to_gold < b.time_to_gold;});break;
-                    case 8: filtered_elements.Sort(function(a,b) {return a.time_to_author < b.time_to_author;});break;
+                    case 5: filtered_elements.Sort(function(a,b) {return a.time_to_bronze.time < b.time_to_bronze.time;});break;
+                    case 6: filtered_elements.Sort(function(a,b) {return a.time_to_silver.time < b.time_to_silver.time;});break;
+                    case 7: filtered_elements.Sort(function(a,b) {return a.time_to_gold.time < b.time_to_gold.time;});break;
+                    case 8: filtered_elements.Sort(function(a,b) {return a.time_to_author.time < b.time_to_author.time;});break;
                     case 9: filtered_elements.Sort(function(a,b) {return a.modified_time < b.modified_time;});break;
 #elif MP4
                     case 4: filtered_elements.Sort(function(a,b) {return a.titlepack < b.titlepack;});break;
@@ -126,10 +126,10 @@ class Recap {
                     case 3: filtered_elements.Sort(function(a,b) {return a.resets > b.resets;});break;
 #if TMNEXT
                     case 4: filtered_elements.Sort(function(a,b) {return a.respawns > b.respawns;});break;
-                    case 5: filtered_elements.Sort(function(a,b) {return a.time_to_bronze > b.time_to_bronze;});break;
-                    case 6: filtered_elements.Sort(function(a,b) {return a.time_to_silver > b.time_to_silver;});break;
-                    case 7: filtered_elements.Sort(function(a,b) {return a.time_to_gold > b.time_to_gold;});break;
-                    case 8: filtered_elements.Sort(function(a,b) {return a.time_to_author > b.time_to_author;});break;
+                    case 5: filtered_elements.Sort(function(a,b) {return a.time_to_bronze.time > b.time_to_bronze.time;});break;
+                    case 6: filtered_elements.Sort(function(a,b) {return a.time_to_silver.time > b.time_to_silver.time;});break;
+                    case 7: filtered_elements.Sort(function(a,b) {return a.time_to_gold.time > b.time_to_gold.time;});break;
+                    case 8: filtered_elements.Sort(function(a,b) {return a.time_to_author.time > b.time_to_author.time;});break;
                     case 9: filtered_elements.Sort(function(a,b) {return a.modified_time > b.modified_time;});break;
 #elif MP4
                     case 4: filtered_elements.Sort(function(a,b) {return a.titlepack > b.titlepack;});break;

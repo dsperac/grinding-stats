@@ -9,10 +9,10 @@ class RecapElement {
     uint64 resets;
     uint64 respawns;
 
-    uint64 time_to_bronze;
-    uint64 time_to_silver;
-    uint64 time_to_gold;
-    uint64 time_to_author;
+    FileMedalTime time_to_bronze;
+    FileMedalTime time_to_silver;
+    FileMedalTime time_to_gold;
+    FileMedalTime time_to_author;
 
     int64 modified_time;
 #if MP4

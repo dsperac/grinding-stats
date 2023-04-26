@@ -107,10 +107,10 @@ uint columns = 6;
             UI::TableSetupColumn("Resets",UI::TableColumnFlags::WidthFixed,100);
 #if TMNEXT
             UI::TableSetupColumn("Respawns",UI::TableColumnFlags::WidthFixed,100);
-            UI::TableSetupColumn("Time to Bronze", UI::TableColumnFlags::WidthFixed, 100);
-            UI::TableSetupColumn("Time to Silver", UI::TableColumnFlags::WidthFixed, 100);
-            UI::TableSetupColumn("Time to Gold", UI::TableColumnFlags::WidthFixed, 100);
-            UI::TableSetupColumn("Time to Author", UI::TableColumnFlags::WidthFixed, 100);
+            UI::TableSetupColumn("Time to Bronze", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
+            UI::TableSetupColumn("Time to Silver", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
+            UI::TableSetupColumn("Time to Gold", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
+            UI::TableSetupColumn("Time to Author", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
 #elif MP4
             UI::TableSetupColumn("Title pack",UI::TableColumnFlags::WidthFixed|UI::TableColumnFlags::NoResize,100);
 #endif
@@ -149,10 +149,10 @@ uint columns = 6;
                         finishes = "" + element.finishes;
                         resets = "" + element.resets;
                         respawns = "" + element.respawns;
-                        time_to_bronze = Medal::to_string(element.time_to_bronze);
-                        time_to_silver = Medal::to_string(element.time_to_silver);
-                        time_to_gold = Medal::to_string(element.time_to_gold);
-                        time_to_author = Medal::to_string(element.time_to_author);
+                        time_to_bronze = element.time_to_bronze.to_string();
+                        time_to_silver = element.time_to_silver.to_string();
+                        time_to_gold = element.time_to_gold.to_string();
+                        time_to_author = element.time_to_author.to_string();
                         time_modified = Time::FormatString("%F %r",element.modified_time);
 #if MP4
                         titlepack = element.titlepack;
