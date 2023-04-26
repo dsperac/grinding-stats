@@ -18,6 +18,18 @@ class FileMedalTime {
         }
     }
 
+    int64 sort_val {
+        get const {
+            if (medal_time_type == MedalTimeType::KeyNotExists)
+                return -3;
+            if (medal_time_type == MedalTimeType::Unachieved)
+                return -2;
+            if (medal_time_type == MedalTimeType::MedalAchievementTimeUnknown)
+                return -1;
+            return int64(this.time);
+        }
+    }
+
     MedalTimeType medal_time_type {
         get const {
             if (_is_unknown.value) {
@@ -64,7 +76,7 @@ class FileMedalTime {
             return '\\$6d0' + '+';
         }
         if (!_time.has_value) {
-            return '\\$aaa' + '?';
+            return '';
         }
         if (_time.value == 0) {
             return '\\$f60' + '-';
