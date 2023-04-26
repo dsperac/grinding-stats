@@ -23,10 +23,7 @@ class Recap {
     uint total_finishes = 0;
     uint total_resets = 0;
     uint total_respawns = 0;
-    uint total_time_to_bronze = 0;
-    uint total_time_to_silver = 0;
-    uint total_time_to_gold = 0;
-    uint total_time_to_author = 0;
+    MedalTotals@ medal_totals = MedalTotals();
 
     private void count_total_time() {
         total_time = 0;
@@ -57,16 +54,7 @@ class Recap {
     }
 
     private void count_totals_for_medals() {
-        total_time_to_bronze = 0;
-        total_time_to_silver = 0;
-        total_time_to_gold = 0;
-        total_time_to_author = 0;
-        for (uint i = 0; i < filtered_elements.Length; i++) {
-            total_time_to_bronze += filtered_elements[i].time_to_bronze.time;
-            total_time_to_silver += filtered_elements[i].time_to_silver.time;
-            total_time_to_gold += filtered_elements[i].time_to_gold.time;
-            total_time_to_author += filtered_elements[i].time_to_author.time;
-        }
+        medal_totals.count_totals(filtered_elements);
     }
 
     private void count_totals() {

@@ -1,3 +1,10 @@
+enum MedalTimeType {
+    KeyNotExists,
+    MedalAchievementTimeUnknown,
+    Unachieved,
+    Achieved
+}
+
 class FileMedalTime {
 
     private BoolRef@ _is_unknown = BoolRef();
@@ -8,6 +15,21 @@ class FileMedalTime {
     uint64 time {
         get const {
             return _time.value_or_default;
+        }
+    }
+
+    MedalTimeType medal_time_type {
+        get const {
+            if (_is_unknown.value) {
+                return MedalTimeType::MedalAchievementTimeUnknown;
+            }
+            if (!_time.has_value) {
+                return MedalTimeType::KeyNotExists;
+            }
+            if (_time.value == 0) {
+                return MedalTimeType::Unachieved;
+            }
+            return MedalTimeType::Achieved;
         }
     }
 
@@ -39,11 +61,14 @@ class FileMedalTime {
     
     string to_string() {
         if (_is_unknown.value) {
-            return '+';
+            return '\\$6d0' + '+';
         }
         if (!_time.has_value) {
-            return '?';
+            return '\\$aaa' + '?';
         }
-        return Medal::to_string(_time.value);
+        if (_time.value == 0) {
+            return '\\$f60' + '-';
+        }
+        return '\\$6d0' + Medal::to_string(_time.value);
     }
 }

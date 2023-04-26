@@ -53,21 +53,22 @@
 
 class Files {
     bool created = false;
+    bool loaded = false;
+
     string map_id = "";
     string json_file = "";
+
     uint finishes = 0;
     uint resets = 0;
     uint64 time = 0;
-    bool loaded = false;
     uint respawns = 0;
     FileMedalTime@ time_to_bronze = FileMedalTime();
     FileMedalTime@ time_to_silver = FileMedalTime();
     FileMedalTime@ time_to_gold = FileMedalTime();
     FileMedalTime@ time_to_author = FileMedalTime();
-    Json::Value json_obj = Json::Parse(
-        '{"finishes": 0,"resets": 0,"time": 0,"respawns":0,"timeToBronze":0,"timeToSilver":0,"timeToGold":0,"timeToAuthor":0}'
-    );
+
     Files() {}
+
     Files(const string &in id) {
         if (id == "" || id == "Unassigned") return;
 
@@ -76,6 +77,7 @@ class Files {
         read_file();
         created = true;
     }
+
     void read_file() {
         if (IO::FileExists(json_file)) {
             auto content = Json::FromFile(json_file);
@@ -106,6 +108,7 @@ class Files {
         }
         loaded = true;
     }
+
     void read_file_new(const Json::Value &in content) {
         finishes = Text::ParseUInt64(content.Get("finishes"));
         resets = Text::ParseUInt64(content.Get('resets'));
@@ -154,7 +157,6 @@ class Files {
         }
     }
 
-
     bool is_file_time_corrupt(const Json::Value &in content) {
         int64 signed_time = content.Get('time');
         if (signed_time < 0) return true;
@@ -162,7 +164,6 @@ class Files {
         
         return false;
     }
-
 
     void write_file() {
         if (map_id == "" || map_id == "Unassigned") {
@@ -246,6 +247,7 @@ class Files {
     FileMedalTime get_time_to_author() {
         return time_to_author;
     }
+
     void reset_file() {
         print(json_file);
         IO::Delete(json_file);
@@ -256,6 +258,7 @@ class Files {
             IO::Delete(files[i]);
         }
     }
+    
     void debug_print(const string &in text) {
         print(text);
     }

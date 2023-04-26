@@ -107,10 +107,26 @@ uint columns = 6;
             UI::TableSetupColumn("Resets",UI::TableColumnFlags::WidthFixed,100);
 #if TMNEXT
             UI::TableSetupColumn("Respawns",UI::TableColumnFlags::WidthFixed,100);
-            UI::TableSetupColumn("Time to Bronze", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
-            UI::TableSetupColumn("Time to Silver", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
-            UI::TableSetupColumn("Time to Gold", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
-            UI::TableSetupColumn("Time to Author", UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending, 100);
+            UI::TableSetupColumn(
+                "Bronze" + recap.medal_totals.bronze_perc,
+                UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending,
+                150
+            );
+            UI::TableSetupColumn(
+                "Silver" + recap.medal_totals.silver_perc,
+                UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending,
+                150
+            );
+            UI::TableSetupColumn(
+                "Gold" + recap.medal_totals.gold_perc,
+                UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending,
+                150
+            );
+            UI::TableSetupColumn(
+                "Author" + recap.medal_totals.author_perc,
+                UI::TableColumnFlags::WidthFixed | UI::TableColumnFlags::PreferSortDescending,
+                150
+            );
 #elif MP4
             UI::TableSetupColumn("Title pack",UI::TableColumnFlags::WidthFixed|UI::TableColumnFlags::NoResize,100);
 #endif
@@ -165,10 +181,10 @@ uint columns = 6;
                         finishes = "" + recap.total_finishes;
                         resets = "" + recap.total_resets;
                         respawns = "" + recap.total_respawns;
-                        time_to_bronze = Medal::to_string(recap.total_time_to_bronze);
-                        time_to_silver = Medal::to_string(recap.total_time_to_silver);
-                        time_to_gold = Medal::to_string(recap.total_time_to_gold);
-                        time_to_author = Medal::to_string(recap.total_time_to_author);
+                        time_to_bronze = recap.medal_totals.bronze_totals;
+                        time_to_silver = recap.medal_totals.silver_totals;
+                        time_to_gold = recap.medal_totals.gold_totals;
+                        time_to_author = recap.medal_totals.author_totals;
                         time_modified = "--:--:--";
                     }
                         UI::TableNextRow();
