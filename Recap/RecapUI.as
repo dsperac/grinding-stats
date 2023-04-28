@@ -58,6 +58,7 @@ string recap_filter_string(recap_filter filter) {
 
 recap_filter current_recap = recap_filter::all;
 void RenderRecap() {
+    UI::PushStyleVar(UI::StyleVar::Alpha, float(1.022));
     if(UI::Begin("Grinding Stats Recap",setting_recap_show_menu,UI::WindowFlags::NoCollapse | UI::WindowFlags::MenuBar)) {
         //menu bar
         if (UI::BeginMenuBar()) {
@@ -230,6 +231,7 @@ uint columns = 6;
         }
     }
     UI::End();
+    UI::PopStyleVar();
 }
 
 void add_selectable(recap_filter filter) {

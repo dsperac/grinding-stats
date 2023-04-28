@@ -50,48 +50,61 @@ class Medals : Component {
 
     void handler() override {
 #if TMNEXT
-        while(running) { 
+        while (running) {
             auto app = GetApp();
             auto playground = app.CurrentPlayground;
-            auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
-            auto network = cast<CTrackManiaNetwork>(app.Network);
 
-            if (playground !is null && playgroundScript !is null && playground.GameTerminals.Length > 0) {
-                auto terminal = playground.GameTerminals[0];
-                auto gui_player = cast<CSmPlayer>(terminal.GUIPlayer);
-                auto ui_sequence = terminal.UISequence_Current;
-
-                if (gui_player !is null) {
-
-                    if (!handled && ui_sequence == CGamePlaygroundUIConfig::EUISequence::Finish) {
-                        handled = true;
-
-                        auto playerScriptAPI = cast<CSmScriptPlayer>(gui_player.ScriptAPI);
-                        auto ghost = playgroundScript.Ghost_RetrieveFromPlayer(playerScriptAPI);
-
-                        auto curr_total_time = data.timer.total;
-                        auto finish_time = ghost.Result.Time;
-                        auto map_times = data.map_data.map_times;
-
-                        if (!bronze.is_locked() && bronze.time_to_acq == 0 && finish_time <= map_times.bronze) {
-                            bronze.time_to_acq = curr_total_time;
-                        }
-                        if (!silver.is_locked() && silver.time_to_acq == 0 && finish_time <= map_times.silver) {
-                            silver.time_to_acq = curr_total_time;
-                        }
-                        if (!gold.is_locked() && gold.time_to_acq == 0 && finish_time <= map_times.gold) {
-                            gold.time_to_acq = curr_total_time;
-                        }
-                        if (!author.is_locked() && author.time_to_acq == 0 && finish_time <= map_times.author) {
-                            author.time_to_acq = curr_total_time;
-                        }
-                      
-                        playgroundScript.DataFileMgr.Ghost_Release(ghost.Id);
-                    }
-                    if (handled && ui_sequence != CGamePlaygroundUIConfig::EUISequence::Finish)
-                        handled = false;
-                }
+            if (playground is null || playground.GameTerminals.Length == 0) {
+                yield();
+                continue;
             }
+
+            auto terminal = playground.GameTerminals[0];
+            auto gui_player = cast<CSmPlayer>(terminal.GUIPlayer);
+
+            if (gui_player is null) {
+                yield();
+                continue;
+            }
+
+            auto ui_sequence = terminal.UISequence_Current;
+            auto network = cast<CTrackManiaNetwork>(app.Network);
+            auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
+            auto playerScriptAPI = cast<CSmScriptPlayer>(gui_player.ScriptAPI);
+
+            if (!handled && ui_sequence == CGamePlaygroundUIConfig::EUISequence::Finish) {
+                handled = true;
+                
+                auto curr_total_time = data.timer.total;
+                auto map_times = data.map_data.map_times;
+
+                if (playgroundScript is null) {
+                    // TODO: figure out how to get finish time when playing online
+                    yield();
+                    continue;
+                }
+
+                auto ghost = playgroundScript.Ghost_RetrieveFromPlayer(playerScriptAPI);
+                auto finish_time = ghost.Result.Time;
+
+                if (!bronze.is_locked() && bronze.time_to_acq == 0 && finish_time <= map_times.bronze) {
+                    bronze.time_to_acq = curr_total_time;
+                }
+                if (!silver.is_locked() && silver.time_to_acq == 0 && finish_time <= map_times.silver) {
+                    silver.time_to_acq = curr_total_time;
+                }
+                if (!gold.is_locked() && gold.time_to_acq == 0 && finish_time <= map_times.gold) {
+                    gold.time_to_acq = curr_total_time;
+                }
+                if (!author.is_locked() && author.time_to_acq == 0 && finish_time <= map_times.author) {
+                    author.time_to_acq = curr_total_time;
+                }
+
+                playgroundScript.DataFileMgr.Ghost_Release(ghost.Id);
+            } else if (handled && ui_sequence != CGamePlaygroundUIConfig::EUISequence::Finish) {
+                handled = false;
+            }
+
             yield();
         }
 #endif
