@@ -68,15 +68,11 @@ class Medals : Component {
             }
 
             auto ui_sequence = terminal.UISequence_Current;
-            auto network = cast<CTrackManiaNetwork>(app.Network);
-            auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
-            auto playerScriptAPI = cast<CSmScriptPlayer>(gui_player.ScriptAPI);
 
             if (!handled && ui_sequence == CGamePlaygroundUIConfig::EUISequence::Finish) {
                 handled = true;
                 
-                auto curr_total_time = data.timer.total;
-                auto map_times = data.map_data.map_times;
+                auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
 
                 if (playgroundScript is null) {
                     // TODO: figure out how to get finish time when playing online
@@ -84,8 +80,12 @@ class Medals : Component {
                     continue;
                 }
 
+                auto playerScriptAPI = cast<CSmScriptPlayer>(gui_player.ScriptAPI);
                 auto ghost = playgroundScript.Ghost_RetrieveFromPlayer(playerScriptAPI);
+
                 auto finish_time = ghost.Result.Time;
+                auto curr_total_time = data.timer.total;
+                auto map_times = data.map_data.map_times;
 
                 if (!bronze.is_locked() && bronze.time_to_acq == 0 && finish_time <= map_times.bronze) {
                     bronze.time_to_acq = curr_total_time;
