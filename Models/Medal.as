@@ -10,9 +10,9 @@ class Medal {
 
     string toString() {
         if (_is_locked) {
-            return '\\$bbb' + '+';
+            return COLOR_GRAY + '+';
         }
-        return '\\$bbb' + Medal::to_string(time_to_acq);
+        return COLOR_GRAY + Medal::to_string(time_to_acq);
     }
 
     void lock() {

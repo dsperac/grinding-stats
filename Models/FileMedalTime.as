@@ -72,15 +72,15 @@ class FileMedalTime {
     }
     
     string to_string() {
-        if (_is_unknown.value) {
-            return '\\$6d0' + '+';
-        }
-        if (!_time.has_value) {
+        if (medal_time_type == MedalTimeType::KeyNotExists)
             return '';
-        }
-        if (_time.value == 0) {
-            return '\\$f60' + '-';
-        }
-        return '\\$6d0' + Medal::to_string(_time.value);
+        if (medal_time_type == MedalTimeType::Unachieved)
+            return COLOR_ORANGE + '-';
+
+        return COLOR_GREEN + (
+            medal_time_type == MedalTimeType::MedalAchievementTimeUnknown
+            ? '+'
+            : Medal::to_string(_time.value)
+        );
     }
 }
