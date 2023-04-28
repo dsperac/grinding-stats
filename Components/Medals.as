@@ -67,9 +67,7 @@ class Medals : Component {
                 continue;
             }
 
-            auto ui_sequence = terminal.UISequence_Current;
-
-            if (!handled && ui_sequence == CGamePlaygroundUIConfig::EUISequence::Finish) {
+            if (!handled && terminal.UISequence_Current == CGamePlaygroundUIConfig::EUISequence::Finish) {
                 handled = true;
                 
                 auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
@@ -83,25 +81,25 @@ class Medals : Component {
                 auto playerScriptAPI = cast<CSmScriptPlayer>(gui_player.ScriptAPI);
                 auto ghost = playgroundScript.Ghost_RetrieveFromPlayer(playerScriptAPI);
 
-                auto finish_time = ghost.Result.Time;
-                auto curr_total_time = data.timer.total;
-                auto map_times = data.map_data.map_times;
+                auto finishTime = ghost.Result.Time;
+                auto currTotalTime = data.timer.total;
+                auto mapTimes = data.map_data.map_times;
 
-                if (!bronze.is_locked() && bronze.time_to_acq == 0 && finish_time <= map_times.bronze) {
-                    bronze.time_to_acq = curr_total_time;
+                if (!bronze.is_locked() && bronze.time_to_acq == 0 && finishTime <= mapTimes.bronze) {
+                    bronze.time_to_acq = currTotalTime;
                 }
-                if (!silver.is_locked() && silver.time_to_acq == 0 && finish_time <= map_times.silver) {
-                    silver.time_to_acq = curr_total_time;
+                if (!silver.is_locked() && silver.time_to_acq == 0 && finishTime <= mapTimes.silver) {
+                    silver.time_to_acq = currTotalTime;
                 }
-                if (!gold.is_locked() && gold.time_to_acq == 0 && finish_time <= map_times.gold) {
-                    gold.time_to_acq = curr_total_time;
+                if (!gold.is_locked() && gold.time_to_acq == 0 && finishTime <= mapTimes.gold) {
+                    gold.time_to_acq = currTotalTime;
                 }
-                if (!author.is_locked() && author.time_to_acq == 0 && finish_time <= map_times.author) {
-                    author.time_to_acq = curr_total_time;
+                if (!author.is_locked() && author.time_to_acq == 0 && finishTime <= mapTimes.author) {
+                    author.time_to_acq = currTotalTime;
                 }
 
                 playgroundScript.DataFileMgr.Ghost_Release(ghost.Id);
-            } else if (handled && ui_sequence != CGamePlaygroundUIConfig::EUISequence::Finish) {
+            } else if (handled && terminal.UISequence_Current != CGamePlaygroundUIConfig::EUISequence::Finish) {
                 handled = false;
             }
 
